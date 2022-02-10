@@ -1,0 +1,45 @@
+[00:00] Vamos falar agora um pouco da história do MYSQL e de algumas características que ele possui.
+
+[00:06] Falamos já antes sobre a história do SQL. Os bancos relacionais estavam começando a ser popularizados e três desenvolvedores, David Axmark, Allan Larsson e Michael Widenius, precisavam ter uma interface SQL que fosse compatível com o que estava sendo apresentado no mercado de banco de dados.
+
+[00:47] No começo, eles usavam APIs de terceiros para executar os comandos SQL para buscar as informações que eles precisavam de alguns bancos de dados de mercado. Mas esse retorno não foi muito satisfatório, então eles resolveram eles mesmos desenvolverem não somente sua API de consulta, mas também o seu próprio banco de dados, usando o C++.
+
+[01:17] Começou assim a se dar origem ao projeto MYSQL. A partir daí, o MYSQL começou a se popularizar. Primeiro porque ele foi apresentado como um software livre, em que a comunidade poderia ter acesso ao código fonte e contribuir com melhorias para o banco de dados. E ele se mostrou muito rápido, mais rápido do que muitos bancos de mercado que existiam na época, além de apresentar um excelente mecanismo de multitarefas de multi usuário, mostrando que seu servidor poderia ser usado, apesar de ser um software livre de comunidade, e aguentava muito bem uma escalabilidade robusta em missão crítica, que alguns bancos de dados relacionais precisam ter. Quando falo missão crítica é porque o banco não pode, por exemplo, parar nunca.
+
+[02:17] O MYSQL começou a se popularizar como software livre, sendo usado inclusive de modo corporativo. Em 2008, a MYSQL AB, que era o nome da empresa que estava gerenciando o código do MYSQL, foi comprada por um bilhão de dólares, por uma empresa chamada Sun Microsystems.
+
+[02:47] A Sun Microsystems na época era uma empresa grande. Ela começou na área de hardware e depois foi para a área de software. Ela é responsável pela criação do Java e também adquiriu o projeto MYSQL por esse valor de um bilhão.
+
+[03:07] Mas isso não ficou na mão dela durante muito tempo. Em 2009, um ano depois dela ter comprado o MYSQL, a Oracle comprou a Sun e acabou ficando como dona de todos os seus produtos. Por isso hoje a Oracle é dona do Java e do MYSQL.
+
+[03:34] Quando houve a compra por parte da Oracle, houve muito rebuliço no mercado, porque a Oracle tem seu banco de dados relacional robusto, e bem ou mal o MYSQL estava se mostrando um concorrente à altura do Oracle. Então, às vezes, algumas táticas de guerra, se você não consegue derrotar seu inimigo, você o compra e acaba com ele.
+
+[03:59] Felizmente a Oracle manteve o desenvolvimento do MYSQL. É claro que nessa época a comunidade open source quando o MYSQL passou para a mão da Oracle criou outro banco de dados que pode ser talvez foco de algum outro treinamento nosso na Alura, que é o MariaDB. O sucessor na parte open source do MYSQL.
+
+[04:28] Mas o MYSQL continuou sendo desenvolvido dentro da Oracle e como opção barata para as empresas, principalmente no mercado corporativo e também no mercado online, que vinha crescendo muito.
+
+[04:52] A Oracle soube manter a licença do MYSQL de forma dupla. Ou seja, os usuários podem escolher entre usar o programa como um produto open source, sob os tempos da licença GNU, ou comprar a licença padrão comercial do MYSQL. Claro que a Oracle ofereceu algumas vantagens para a empresa que compra o MYSQL de forma corporativa, como uma licença de um produto normal. Suporte mais rápido, acesso a documentação específica. Mas o banco de dados oferecido de forma aberta, open source, ainda mantém toda a eficiência característica que ele é apresentado antes de ser comprado por essas gigantes corporativas na área de tecnologia.
+
+[05:47] Claro, o MYSQL é um banco de dados relacional, ele tem a característica de bancos de dados relacionais que mencionei quando falei da história do SQL. E também é claro que o MYSQL é compatível com a linguagem SEQUEL. Por isso vamos aprender neste treinamento o SQL usando MYSQL.
+
+[06:20] O MYSQL possui um servidor que até certo ponto é bem robusto. Esse servidor provém características de multiacesso, integridade de dados, faz relacionamento entre tabelas, trabalha a concorrência quando várias pessoas querem acessar o mesmo dado na mesma tabela, faz controle de transações e outros. Essa é uma característica importante no que diz respeito à parte de servidor do MYSQL.
+
+[06:53] Outra característica importante é a portabilidade do banco de dados. O MYSQL pode ser transacionado entre diversos sistemas. Ou seja, posso desenvolver o MYSQL em Windows e depois usar esse banco de dados no Linux, ou no Unix. Ou seja, ele é interplataforma. Além disso, o MYSQL nos provém diversas APIs que permitem que possamos acessar os dados do MYSQL usando DotNet, Java, Phyton, PHP, Java Script, JQuery. Ou seja, todas as linguagens de programação que são mais utilizadas no mercado têm APIs nativas para acesso ao MYSQL.
+
+[07:48] Outra característica legal é a parte de multithreads. O MYSQL usa uma programação de threads utilizando diretamente o kernel do sistema operacional. Isso faz com que consigamos aumentar a velocidade de processamento das transações, e facilita a integração da ferramenta com hardwares, permitindo a escalabilidade da performance, ou seja, se você tiver uma SQL usando um servidor que tem um número x de CPUs, se você colocar mais CPUs ele se adapta facilmente utilizando o máximo do hardware que você está deixando disponível para o seu bando MYSQL.
+
+[08:36] O MYSQL trabalha com várias formas de armazenamento do banco de dados. Quando formos falar mais à frente sobre a parte de administração, vamos discutir isso com maior detalhes. Essas diferentes formas de armazenamento do banco de dados se adaptam às características das suas necessidades. Algumas formas de armazenamento priorizam a velocidade, enquanto outro priorizam o alto volume de armazenamento. Dependendo do foco com o qual você quer usar o MYSQL, você pode utilizar uma forma de armazenamento diferente.
+
+[09:25] Outra característica importante é a velocidade. O MYSQL é considerado um dos bancos mais rápidos do mercado, principalmente quando utilizamos funcionalidades ligadas à internet. Hoje, por exemplo, dentro dos sites de e-commerce, de aplicações de internet, o MYSQL é um dos bancos preferidos, principalmente porque hoje, nas nuvens, como na Amazon, do Google, da Microsoft, todas elas disponibilizam para você instâncias de MYSQL com alta escalabilidade. É um dos bancos preferidos do pessoal que desenvolve para internet.
+
+[10:16] Segurança. O banco de dados do MYSQL possui internamente diversos mecanismos de segurança. Além disso, permite que você possa segregar os dados por usuários de acesso, fazendo com que os usuários possam acessar somente os dados que eles podem ver. O MYSQL também possui uma série de mecanismos internos de segurança, o que torna ele um dos bancos mais seguros do mercado.
+
+[10:46] Capacidade. A estrutura interna do MYSQL permite que possamos armazenar uma quantidade enorme de dados. Dependendo, claro, das formas de armazenamento, se escolhermos uma forma que prioriza volume de dados, tenho um limite hoje de até 65 mil terabytes de dados que podem ser armazenados. Claro que em bancos desse tamanho vou conseguir armazenar essas informações, mas recuperá-las ou manipulá-las talvez seja um pouco difícil. Vou ter que ter muito hardware para fazer isso. É uma questão de equilíbrio. Mas também, um banco de dados que necessita de 65 mil terabytes de informação é muito grande. A maioria das aplicações corporativas não necessitam desse tamanho todo para trabalharem.
+
+[11:48] Aplicabilidade. O MYSQL não se aplica apenas a aplicações de internet, claro, apesar de ser preferida pelo pessoal da web. Também podemos dizer que o MYSQL pode ser usado muito bem em publicações de desktop, ou até mesmo aplicações corporativas, que chamamos de On Premises, ou seja, onde eu instalo no próprio servidor da empresa o banco de dados. Principalmente porque ele possui o que chamamos de ODBCs ou JDBCs, utilizando mais para o Windows e o JDBC mais para Java, que permite que possamos fazer acessos rápidos ao banco de dados MYSQL em aplicações desktop.
+
+[12:40] Finalmente, o item log. O MYSQL tem um forte gerenciamento de log, que registra tudo que fazemos no banco. Isso é interessante quando queremos, por exemplo, fazer uma recuperação de dados. Ou, por exemplo, se quisermos fazer o que chamamos de réplica de servidores, uma técnica muito usada no MYSQL quando temos um servidor chamado master e um servidor chamado slave. Há uma sincronização de dados.
+
+[13:11] Por isso o MYSQL é um dos bancos mais usados em nuvem, porque normalmente esses bancos de dados em nuvem estão replicados em diversos lugares do planeta para que se um CPD cair, o outro continue vivo e minha aplicação continue tendo alta disponibilidade de acesso.
+
+[13:32] É isso. Um pouco da história e características do banco MYSQL, que vou usar neste treinamento para mostrar para vocês como funciona a linguagem SQL.

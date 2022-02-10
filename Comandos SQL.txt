@@ -1,0 +1,41 @@
+$ CREATE DATABASE suco;   => cria a base de dados suco
+$ DROP DATABASE suco;     => apaga a base de dados suco
+$ SELECT * FROM city;     => seleciona tudo o que estiver na tabela city e exibe
+$ USE suco;               => selecionar essa tabela para usá-la
+$ CREATE TABLE TB_CLIENTES  => cria uma tabela, sendo primeiro o nome da coluna e o tipo de dados em cada vírgula 
+  ( CPF VARCHAR (11) ,
+    NOME VARCHAR (100) ,
+    ENDERECO1 VARCHAR (150) ,
+    ENDERECO2 VARCHAR (150) ,
+    BAIRRO VARCHAR (50))
+$ DROP TABLE TB_CLIENTES2                     => para apagar tabelas
+$ INSERT INTO tbproduto (                     => inserir valores dentro da tabela
+   PRODUTO,  NOME, EMBALAGEM, TAMANHO, SABOR,
+   PRECO_LISTA) VALUES (
+   '1040107', 'Light - 350 ml - Melância',
+   'Lata', '350 ml', 'Melância', 4.56);
+$ UPDATE TABELA_DE_VENDEDORES SET PERCENTUAL_COMISSAO = 0.11, NOME='Arlindo Pereira'  => Alterar dados da tabela. Aqui vamos alterar os campos PERCENTUAL_COMISSAO e NOME, usando o número de matrícula como ID
+  WHERE MATRICULA = '00236';
+$ DELETE FROM tbProduto WHERE PRODUTO = ‘1078680’; => deletar uma informação dentro da tabela
+$
+
+=======Usar mysql no prompt================================================================================================
+Entrar na pasta =>    C: \program files\mysql\mysql server 8.0\bin>
+$ mysql -h localhost -u root -p     => O -h é meu servidor, que é o localhost. O -u é meu usuário, e o -p é minha senha, mas ainda não vou digitar. Só estou dizendo que vou me conectar no servidor localhost, vou usar o usuário root, e a senha vai ser digitada a seguir.
+Digite a senha
+$ use database_name    => Seleciona a base de dados que estamos usando atualmente  ex: use world
+exit                   => sair do mysql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
