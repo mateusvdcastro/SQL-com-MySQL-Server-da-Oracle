@@ -12,11 +12,65 @@ SELECT ESTADO, SUM(LIMITE_DE_CREDITO) AS LIMITE_TOTAL FROM tabela_de_clientes GR
 
 SELECT EMBALAGEM, MAX(PRECO_DE_LISTA) AS MAIOR_PRECO FROM tabela_de_produtos GROUP BY EMBALAGEM;
 
-SELECT * FROM tabela_de_produtos;
-
 SELECT * FROM tabela_de_produtos WHERE CODIGO_DO_PRODUTO = '1101035';
 
 SELECT MAX(QUANTIDADE) AS MAXIMAS_QUANT FROM itens_notas_fiscais WHERE CODIGO_DO_PRODUTO = '1101035';
 
 SELECT COUNT(*) FROM itens_notas_fiscais WHERE codigo_do_produto = '1101035' AND QUANTIDADE = 99;
 
+  SELECT CPF, COUNT(*) FROM notas_fiscais  /* Quais foram os clientes que fizeram mais de 2000 compras em 2016?*/
+  WHERE YEAR(DATA_VENDA) = 2016
+  GROUP BY CPF
+  HAVING COUNT(*) > 2000;
+
+SELECT NOME_DO_PRODUTO, PRECO_DE_LISTA, 
+CASE
+	WHEN PRECO_DE_LISTA >= 12 THEN 'PRODUTO CARO' 
+    WHEN PRECO_DE_LISTA >= 7 AND PRECO_DE_LISTA < 12 THEN 'PRODUTO EM CONTA'
+    ELSE 'PRODUTO BARATO'
+    END AS PRECO_TIPO
+FROM tabela_de_produtos;
+
+SELECT EMBALAGEM, MAX(PRECO_DE_LISTA) AS MAIOR_PRECO,
+MIN(PRECO_DE_LISTA) AS MENOR_PRECO FROM tabela_de_produtos
+GROUP BY EMBALAGEM;
+
+SELECT NOME, DATA_DE_NASCIMENTO, 
+CASE
+	WHEN YEAR(DATA_DE_NASCIMENTO) < 1990 THEN 'VELHO'
+    WHEN YEAR(DATA_DE_NASCIMENTO) <= 1995 AND YEAR(DATA_DE_NASCIMENTO) >= 1990 THEN 'JOVENS'
+    ELSE 'CRIANÇAS'
+    END AS IDADE_CATEGORIA
+FROM tabela_de_clientes;
+
+SELECT EMBALAGEM,    /* Status dos produtos sabor manga pelo preco medio deles */
+CASE
+   WHEN PRECO_DE_LISTA >= 12 THEN 'PRODUTO CARO'
+   WHEN PRECO_DE_LISTA >= 7 AND PRECO_DE_LISTA < 12 THEN 'PRODUTO EM CONTA'
+   ELSE 'PRODUTO BARATO'
+END AS STATUS_PRECO, AVG(PRECO_DE_LISTA) AS PRECO_MEDIO
+FROM tabela_de_produtos
+WHERE sabor = 'Manga'
+GROUP BY EMBALAGEM,
+CASE
+   WHEN PRECO_DE_LISTA >= 12 THEN 'PRODUTO CARO'
+   WHEN PRECO_DE_LISTA >= 7 AND PRECO_DE_LISTA < 12 THEN 'PRODUTO EM CONTA'
+   ELSE 'PRODUTO BARATO'
+END
+ORDER BY EMBALAGEM;
+
+SELECT * FROM tabela_de_vendedores A INNER JOIN notas_fiscais B /* chamamos as tabelas de A e B e unimos as duas pela matricula */ 
+ON A.MATRICULA = B.MATRICULA;
+
+SELECT * FROM tabela_de_clientes;
+SELECT * FROM notas_fiscais;
+SELECT * FROM itens_notas_fiscais;
+SELECT * FROM tabela_de_produtos;
+
+SELECT DISTINCT A.CPF, A.NOME, B.CPF FROM tabela_de_clientes A  /* O cliente que possui o CPF vindo da tabela de notas com o valor nulo, é o cliente que nunca emitiu nota fiscal.  */
+LEFT JOIN notas_fiscais B ON A.CPF = B.CPF
+WHERE B.CPF IS NULL;
+
+SELECT YEAR(DATA_VENDA), SUM(QUANTIDADE * PRECO) AS FATURAMENTO  /* Faturamento anual da empresa */
+FROM notas_fiscais A INNER JOIN itens_notas_fiscais B
+ON A.NUMERO = B.NUMERO GROUP BY YEAR(DATA_VENDA);

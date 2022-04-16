@@ -1,27 +1,48 @@
-$ USE suco;               => selecionar essa tabela para usá-la
-$ CREATE DATABASE suco;   => cria a base de dados suco
-$ DROP DATABASE suco;     => apaga a base de dados suco
-$ SELECT * FROM city;     => seleciona tudo o que estiver na tabela city e exibe
-$ SELECT NAME, NEIGHBORHOOD FROM city LIMIT 5;  => Consulta a coluna NAME e NEIGHBORHOOD, e exibe somento 5 registros
-SELECT * FROM TABELA LIMIT 4,3;   => Mostra a tabela a partir da quarta linha e seus 3 próximos, incluindo ele mesmo
-$ SELECT CPF AS CPF_CLIENTE, NOME AS NOME_CLIENTE FROM tbcliente; => Dei pseudônimos (alias) aos campos que serão exibidos
-$ SELECT * FROM tbcliente WHERE CIDADE='Rio de Janeiro';  => mostra todos os clientes que moram no RJ
-$ SELECT * FROM tbCliente WHERE NOME > 'Fernando Cavalcante';  => Todo nome com uma letra "maior" que F por ordem alfabética 
-$ SELECT * FROM tbcliente WHERE IDADE <> 22;  => "<> símbolo de diferente" podemos também filtrar por >,<,<=,>=,=
+$ USE suco;                                         						   => selecionar essa tabela para usá-la
+$ CREATE DATABASE suco;                             					        => cria a base de dados suco
+$ DROP DATABASE suco;                               						   => apaga a base de dados suco
+$ SELECT * FROM city;                               						   => seleciona tudo o que estiver na tabela city e exibe
+$ SELECT NAME, NEIGHBORHOOD FROM city LIMIT 5;     					        => Consulta a coluna NAME e NEIGHBORHOOD, e exibe somento 5 registros
+$ SELECT * FROM TABELA LIMIT 4,3;                   						   => Mostra a tabela a partir da quarta linha e seus 3 próximos, incluindo ele mesmo
+$ SELECT CPF AS CPF_CLIENTE, NOME AS NOME_CLIENTE FROM tbcliente;                    => Dei pseudônimos (alias) aos campos que serão exibidos
+$ SELECT * FROM tbcliente WHERE CIDADE='Rio de Janeiro';                             => mostra todos os clientes que moram no RJ
+$ SELECT * FROM tbCliente WHERE NOME > 'Fernando Cavalcante';                        => Todo nome com uma letra "maior" que F por ordem alfabética 
+$ SELECT * FROM tbcliente WHERE IDADE <> 22;                                         => "<> símbolo de diferente" podemos também filtrar por >,<,<=,>=,=
 $ SELECT * FROM tbproduto WHERE PRECO_LISTA BETWEEN 16.007 AND 16.009;
 $ SELECT * FROM tbcliente WHERE DATA_NASCIMENTO <= '1995-01-13'
 $ SELECT * FROM tbcliente WHERE YEAR(DATA_NASCIMENTO) = 1995; 
 $ SELECT * FROM tbcliente WHERE MONTH(DATA_NASCIMENTO) = 10;
 $ SELECT * FROM tabela de produtos WHERE sabor IN ('laranja', 'manga');
-$ SELECT * FROM tabela de produtos WHERE sabor LIKE '%maçã%';   => busca todo sabor que tenha maçã no nome
-$ SELECT * FROM tabela_de_clientes WHERE NOME LIKE '%Mattos';   => Quantos clientes possuem o último sobrenome Mattos
-$ SELECT DISTINCT * FROM TABELA;   => retornará todas as linhas que não possuem um correspondente (somente as linhas únicas na tabela)
-$ SELECT DISTINCT BAIRRO FROM tabela_de_clientes WHERE CIDADE = 'Rio de Janeiro'; =>Quais são os bairros da cidade do Rio de Janeiro que possuem clientes?
-$ SELECT NOME FROM tabela_de_clientes ORDER BY NOME;  => Ordena de a-z e exibe os nomes nessa ordem
-$ SELECT NOME FROM tabela_de_clientes ORDER BY NOME DESC; => Ordena de z-a e exibe os nomes nessa ordem
-$ SELECT ESTADO, SUM(LIMITE_DE_CREDITO) AS LIMITE_TOTAL FROM tabela_de_clientes GROUP BY ESTADO; => agrupa por estado e soma o limite de credito total dos estados
-$ SELECT EMBALAGEM, MAX(PRECO_DE_LISTA) AS MAIOR_PRECO FROM tabela_de_produtos GROUP BY EMBALAGEM; => Embalagens mais caras
+$ SELECT * FROM tabela de produtos WHERE sabor LIKE '%maçã%';                        => busca todo sabor que tenha maçã no nome
+$ SELECT * FROM tabela_de_clientes WHERE NOME LIKE '%Mattos';                        => Quantos clientes possuem o último sobrenome Mattos
+$ SELECT DISTINCT * FROM TABELA;                                                     => retornará todas as linhas que não possuem um correspondente (somente as linhas únicas na tabela)
+$ SELECT DISTINCT BAIRRO FROM tabela_de_clientes WHERE CIDADE = 'Rio de Janeiro';    =>Quais são os bairros da cidade do Rio de Janeiro que possuem clientes?
+$ SELECT NOME FROM tabela_de_clientes ORDER BY NOME;                                 => Ordena de a-z e exibe os nomes nessa ordem
+$ SELECT NOME FROM tabela_de_clientes ORDER BY NOME DESC;                            => Ordena de z-a e exibe os nomes nessa ordem
+$ SELECT ESTADO, SUM(LIMITE_DE_CREDITO) AS LIMITE_TOTAL FROM tabela_de_clientes GROUP BY ESTADO;    => agrupa por estado e soma o limite de credito total dos estados
+$ SELECT EMBALAGEM, MAX(PRECO_DE_LISTA) AS MAIOR_PRECO FROM tabela_de_produtos GROUP BY EMBALAGEM;  => Embalagens mais caras
 $ SELECT COUNT(*) FROM itens_notas_fiscais WHERE codigo_do_produto = '1101035' AND QUANTIDADE = 99; => quantos itens de venda existem com a maior quantidade do produto '1101035'
+$ SELECT X, SUM(Y) FROM tab GROUP BY X HAVING SUM(Y) >= 6;      => Having de "tendo", iremos agrupar pelos termos semelhantes em x e soma-los me y, além disso, queremos somente os que tiverem sum(y) maior ou igual a 6
+$ SELECT NOME, DATA_DE_NASCIMENTO,                              => Comando CASE, é o IF e ELSE do SQL
+    CASE
+	   WHEN YEAR(DATA_DE_NASCIMENTO) < 1990 THEN 'VELHO'
+        WHEN YEAR(DATA_DE_NASCIMENTO) <= 1995 AND YEAR(DATA_DE_NASCIMENTO) >= 1990 THEN 'JOVENS'
+        ELSE 'CRIANÇAS'
+        END AS IDADE_CATEGORIA
+  FROM tabela_de_clientes;
+$ SELECT <select_list> FROM tabela A INNER JOIN tabela B         => Chamamos as tabelas de A e B e unimos as duas pela matricula. A cláusula INNER JOIN compara cada linha da tabela A com as linhas da tabela B para encontrar todos os pares de linhas que satisfazem a condição de junção. Se a condição de junção for avaliado como TRUE, os valores da coluna das linhas correspondentes das tabelas A e B serão combinados em uma nova linha e incluídos no conjunto de resultados. 
+   ON A.MATRICULA = B.MATRICULA;
+$ SELECT <select_list> FROM Tabela A LEFT JOIN Tabela B          => Em resumo, a cláusula LEFT JOIN retorna todas as linhas da tabela “esquerda” A e as linhas correspondentes ou valores NULL da tabela “esquerda” A.
+  ON A.Key = B.Key
+$ SELECT <select_list> FROM Tabela A RIGHT JOIN Tabela B         => A RIGHT JOIN retorna um conjunto de resultados que inclui todas as linhas da tabela “direita” B, com ou sem linhas correspondentes na tabela “esquerda” A. Se uma linha na tabela direita B não tiver nenhuma linha correspondente da tabela “esquerda” A, a coluna da tabela “esquerda” A no conjunto de resultados será nula igualmente ao que acontece no LEFT JOIN.
+  ON A.Key = B.Key
+$ SELECT <select_list> FROM Tabela A FULL JOIN Tabela B          => A cláusula FULL JOIN retorna todas as linhas das tabelas unidas, correspondidas ou não, ou seja, você pode dizer que a FULL JOIN combina as funções da LEFT JOIN e da RIGHT JOIN. FULL JOIN é um tipo de junção externa, por isso também é chamada junção externa completa.Quando não existem linhas correspondentes para a linha da tabela esquerda, as colunas da tabela direita serão nulas. Da mesma forma, quando não existem linhas correspondentes para a linha da tabela direita, a coluna da tabela esquerda será nula.
+  ON A.Key = B.Key
+$ SELECT <select_list> FROM Tabela A CROSS JOIN Tabela B         => A cláusula CROSS JOIN retorna todas as linhas das tabelas por cruzamento, ou seja, para cada linha da tabela esquerda queremos todos os linhas da tabelas direita ou vice-versa. Ele também é chamado de produto cartesiano entre duas tabelas. Porém, para isso é preciso que ambas tenham o campo em comum, para que a ligação exista entre as duas tabelas.
+$ 
+$ 
+$ 
+$ 
 $ CREATE TABLE TB_CLIENTES  => cria uma tabela, sendo primeiro o nome da coluna e o tipo de dados em cada vírgula 
   ( CPF VARCHAR (11) ,
     NOME VARCHAR (100) ,
