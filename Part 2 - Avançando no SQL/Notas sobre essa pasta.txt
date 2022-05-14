@@ -1,0 +1,11 @@
+DumpSucosVendas foi um arquivo baixado na alura que deveria ser importado no mysql
+workbench contendo toda a base de dados que seria utilizada nas aulas 
+
+(No MySQL Workbench, abaixo da área SCHEMAS, há duas abas: "Administration" e 
+"Schemas". Clicaremos na primeira e, em seguida, selecionaremos "Data Import/Restore" 
+(em português, importar/restaurar dados). Isso abrirá uma caixa de diálogo e você 
+notará que a opção "Import from Dump Project Folder" já está selecionada. À direita 
+dessa opção, clicaremos no botão "..." e selecionaremos a pasta DumpSucosVendas.)
+
+A pasta Base de Dados era uma forma alternativa de fazer esse import mas não foi
+necessária pois a primeira funcionou

@@ -1,5 +1,8 @@
-$ USE suco;                                         						   => selecionar essa tabela para usá-la
+Ver: https://dev.mysql.com/doc/
+     https://www.w3schools.com/
+
 $ CREATE DATABASE suco;                             					        => cria a base de dados suco
+$ USE suco;                                         						   => selecionar essa tabela para usá-la
 $ DROP DATABASE suco;                               						   => apaga a base de dados suco
 $ SELECT * FROM city;                               						   => seleciona tudo o que estiver na tabela city e exibe
 $ SELECT NAME, NEIGHBORHOOD FROM city LIMIT 5;     					        => Consulta a coluna NAME e NEIGHBORHOOD, e exibe somento 5 registros
@@ -36,6 +39,7 @@ $ SELECT <select_list> FROM Tabela A LEFT JOIN Tabela B          => Em resumo, a
   ON A.Key = B.Key
 $ SELECT <select_list> FROM Tabela A RIGHT JOIN Tabela B         => A RIGHT JOIN retorna um conjunto de resultados que inclui todas as linhas da tabela “direita” B, com ou sem linhas correspondentes na tabela “esquerda” A. Se uma linha na tabela direita B não tiver nenhuma linha correspondente da tabela “esquerda” A, a coluna da tabela “esquerda” A no conjunto de resultados será nula igualmente ao que acontece no LEFT JOIN.
   ON A.Key = B.Key
+!!!! FULL JOIN não é suportado pelo MySql por isso podemos simular ele pelo comando UNION unindo uma consulta LEFT JOIN com uma RIGHT JOIN
 $ SELECT <select_list> FROM Tabela A FULL JOIN Tabela B          => A cláusula FULL JOIN retorna todas as linhas das tabelas unidas, correspondidas ou não, ou seja, você pode dizer que a FULL JOIN combina as funções da LEFT JOIN e da RIGHT JOIN. FULL JOIN é um tipo de junção externa, por isso também é chamada junção externa completa.Quando não existem linhas correspondentes para a linha da tabela esquerda, as colunas da tabela direita serão nulas. Da mesma forma, quando não existem linhas correspondentes para a linha da tabela direita, a coluna da tabela esquerda será nula.
   ON A.Key = B.Key
 $ SELECT <select_list> FROM Tabela A CROSS JOIN Tabela B         => A cláusula CROSS JOIN retorna todas as linhas das tabelas por cruzamento, ou seja, para cada linha da tabela esquerda queremos todos os linhas da tabelas direita ou vice-versa. Ele também é chamado de produto cartesiano entre duas tabelas. Porém, para isso é preciso que ambas tenham o campo em comum, para que a ligação exista entre as duas tabelas.
@@ -62,6 +66,36 @@ $ DELETE FROM tbProduto WHERE PRODUTO = '1078680'; => deletar uma informação d
 $ ALTER TABLE tbproduto ADD PRIMARY KEY (PRODUTO); => altera a minha coluna PRODUTO da tabela tbproduto para que esses valores sejam chaves primárias, ou seja, só podemos ter valores únicos. Assim, se tentarmos adicionar dois produtos com o mesmo número o SQL Workbench retorna erro
 $ ALTER TABLE tb_clientes ADD COLUMN (DATA_NASCIMENTO DATE); => adicionar uma coluna em uma tabela
 $ ALTER TABLE tb_clientes MODIFY ESTADO VARCHAR(50);   => alterando o tipo de variável de uma coluna
+$ SELECT DISTINCT BAIRRO FROM tabela_de_clientes;     => Une duas consultas SQL. Ao rodar o comando UNION com essas duas consultas, será retornada uma lista única com todos os registros. Note que há uma restrição para esse comando: é necessário que as tabelas que serão unidas tenham o mesmo número e tipo de campo. Executando o UNION simples, o DISTINCT automaticamente será aplicado, de forma que os registros iguais também serão unidos.
+  UNION
+  SELECT DISTINCT BAIRRO FROM tabela_de_vendedores;
+!!!! FULL JOIN não é suportado pelo MySql por isso podemos simular ele pelo comando UNION unindo uma consulta LEFT JOIN com uma RIGHT JOIN
+$ SELECT DISTINCT BAIRRO FROM tabela_de_clientes;     => Quando eu quero listar todos os registros de duas ou mais tabelas, listando inclusive os repetidos
+  UNION ALL
+  SELECT DISTINCT BAIRRO FROM tabela_de_vendedores;
+$ SELECT X, Y FROM tab1             => Irá selecionar todos os valores de X onde a tabela Y tiver correspondente em outra tabela. Esse tipo de consulta é importante para que não tenhamos que ficar reescrevendo as consultas toda vez que a tab2 for atualizada.
+  WHERE Y IN (SELECT Y FROM tab2);
+$ SELECT Z.X, Z.NEW_Y FROM          => Nomeamos uma consulta de z, em que retorna uma tabela agrupada por x com a soma da tabela Y, cujo valor de new_y seja igual a 3
+  (SELECT X, SUM(Y) as NEW_Y FROM tab1 
+  GROUP BY X) Z WHERE Z.NEW_Y = 3;
+$ SELECT * FROM tabela_de_clientes WHERE BAIRRO               => importante essa subconsulta para caso a tabela vendedores seja atualizada 
+  IN (SELECT DISTINCT BAIRRO FROM tabela_de_vendedores);      => Assim, o MySQL está interpretando a subconsulta como se fosse uma tabela com alias "X", então X.EMBALAGEM e X.PRECO_MAXIMO referem-se à seleção dos campos dessa tabela "X". Ao final, temos a cláusula WHERE que filtra apenas os preços maiores ou iguais a R$10. O resultado dessa consulta mostra que apenas embalagens PET e garrafas têm o preço máximo maior que R$10.
+$ SELECT X.EMBALAGEM, X.PRECO_MAXIMO FROM 
+  (SELECT EMBALAGEM, MAX(PRECO_DE_LISTA) AS PRECO_MAXIMO FROM tabela_de_produtos
+  GROUP BY EMBALAGEM) X WHERE X.PRECO_MAXIMO >= 10;
+$ CREATE VIEW 'VW_MAIORES_EMBALAGENS' AS                      => Essa é uma estrutura importante no MySQL chamada visão, que é uma tabela lógica, resultado de uma consulta. Ao realizar uma query (seja simples ou complexa) podemos salvá-la com um nome (por exemplo, "VW") e mais tarde referenciar essa visão como se fosse uma tabela (SELECT * FROM VW). As visões (ou views) são bastante úteis quando precisamos disponibilizar parte do nosso banco de dados para uma pessoa externa, pois criamos uma tabela lógica com limites que garantam a segurança das informações e concedemos acesso somente a essa visão. Como a view é uma consulta, ela tem um custo. Toda vez que referenciamos uma visão, pelos bastidores do banco de dados estamos executando uma seleção. Assim sendo, se a visão for um SELECT muito complexo, ao acessá-la o desempenho pode ser prejudicado.
+  SELECT EMBALAGEM, MAX(PRECO_DE_LISTA) AS MAIOR_PRECO FROM tabela_de_produtos
+  GROUP BY EMBALAGEM
+$ SELECT X.EMBALAGEM, X.MAIOR_PRECO FROM                      => utilizando a view que substituiu toda esse código (SELECT X.EMBALAGEM, X.MAIOR_PRECO FROM (SELECT EMBALAGEM, MAX(PRECO_DE_LISTA) AS MAIOR_PRECO FROM tabela_de_produtos GROUP BY EMBALAGEM) X WHERE X.MAIOR_PRECO >= 10;). Pois a view é o mesmo que = SELECT EMBALAGEM, MAX(PRECO_DE_LISTA) AS MAIOR_PRECO FROM tabela_de_produtos GROUP BY EMBALAGEM;
+  vw_maiores_embalagens X WHERE X.MAIOR_PRECO >= 10;
+$ SELECT DISTINCT DATA_VENDA,                                 => exemplo de uso de funções de data no MySql
+  DAYNAME(DATA_VENDA) AS DIA, MONTHNAME(DATA_VENDA) AS MES
+  , YEAR(DATA_VENDA) AS ANO FROM NOTAS_FISCAIS;
+$ 
+$ 
+$ 
+$ 
+$ 
 
 =======Usar mysql no prompt================================================================================================
 Entrar na pasta =>    C: \program files\mysql\mysql server 8.0\bin>

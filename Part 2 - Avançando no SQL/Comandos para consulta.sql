@@ -74,3 +74,37 @@ WHERE B.CPF IS NULL;
 SELECT YEAR(DATA_VENDA), SUM(QUANTIDADE * PRECO) AS FATURAMENTO  /* Faturamento anual da empresa */
 FROM notas_fiscais A INNER JOIN itens_notas_fiscais B
 ON A.NUMERO = B.NUMERO GROUP BY YEAR(DATA_VENDA);
+
+SELECT CPF, COUNT(*) AS CONTADOR FROM notas_fiscais
+WHERE YEAR(DATA_VENDA) = 2016
+GROUP BY CPF;
+
+SELECT X.CPF, X.CONTADOR FROM 
+(SELECT CPF, COUNT(*) AS CONTADOR FROM notas_fiscais
+WHERE YEAR(DATA_VENDA) = 2016
+GROUP BY CPF) X WHERE X.CONTADOR > 2000;
+
+SELECT EMBALAGEM, MAX(PRECO_DE_LISTA) AS MAIOR_PRECO FROM tabela_de_produtos
+GROUP BY EMBALAGEM;
+
+SELECT X.EMBALAGEM, X.MAIOR_PRECO FROM
+(SELECT EMBALAGEM, MAX(PRECO_DE_LISTA) AS MAIOR_PRECO FROM tabela_de_produtos
+GROUP BY EMBALAGEM) X WHERE X.MAIOR_PRECO >= 10;
+
+SELECT X.EMBALAGEM, X.MAIOR_PRECO FROM
+vw_maiores_embalagens X WHERE X.MAIOR_PRECO >= 10;
+
+SELECT A.NOME_DO_PRODUTO, A.EMBALAGEM, A.PRECO_DE_LISTA, X.MAIOR_PRECO
+FROM tabela_de_produtos A INNER JOIN vw_maiores_embalagens X
+ON A.EMBALAGEM = X.EMBALAGEM;
+
+SELECT A.NOME_DO_PRODUTO, A.EMBALAGEM, A.PRECO_DE_LISTA, X.MAIOR_PRECO,
+((A.PRECO_DE_LISTA / X.MAIOR_PRECO) -1) * 100 AS PERCENTUAL
+FROM tabela_de_produtos A INNER JOIN vw_maiores_embalagens X
+ON A.EMBALAGEM = X.EMBALAGEM;  /* Dessa forma, concluimos que "Sabor da Montanha - 700 ml - Uva" vendido em garrafa é 52% mais barato que a garrafa mais cara. Já "Festival de Sabores - 2 Litros - Açaí" é 0% mais barato, pois é justamente a garrafa mais cara. */
+
+
+
+
+
+
